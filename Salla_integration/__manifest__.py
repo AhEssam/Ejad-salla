@@ -6,8 +6,10 @@
        This module allow you to connect odoo with salla """,
 
     'description': """
-        this module allow you to get all salla orders and products and invoices 
-        to install this module you need to install our salla connector from salla store 
+        By using this package you will get all your orders , products , customers  from salla
+And get real time update from salla such as updating product price , order total ,etc..
+Please Note:
+You will have to to subscribe to salla app to get a full dashboard between salla and your odoo system
     """,
 
     'author': "EJAD Digital Solutions ",
