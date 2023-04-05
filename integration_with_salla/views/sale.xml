@@ -1,0 +1,115 @@
+<odoo>
+  <data>
+             <record id="sale_order_form_view_custom" model="ir.ui.view">
+             <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="payment_method"/>
+                <field name="salla_state"/>
+             
+            </xpath>
+              
+
+            </field>
+        </record>
+
+        <record id="sale_order_treeview_custom" model="ir.ui.view">
+             <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                  <tree string="Sales Orders" sample="1" decoration-info="invoice_status == 'to invoice'" decoration-muted="state == 'cancel'">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name" string="Number" readonly="1" decoration-bf="1"/>
+                    <field name="date_order" string="Order Date" widget="date" optional="show"/>
+                    <field name="commitment_date" optional="hide"/>
+                    <field name="expected_date" optional="hide"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="salla_state" optional="show" />
+                    <field name="activity_ids" widget="list_activity" optional="show"/>
+                    <field name="payment_method" />
+                    <field name="company_id" groups="base.group_multi_company" optional="show" readonly="1"/>
+                    <field name="amount_untaxed" sum="Total Tax Excluded" widget="monetary" optional="hide"/>
+                    <field name="amount_tax" sum="Tax Total" widget="monetary" optional="hide"/>
+                    <field name="amount_total" sum="Total Tax Included" widget="monetary" decoration-bf="1" optional="show"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="invoice_status" decoration-success="invoice_status == 'invoiced'" decoration-info="invoice_status == 'to invoice'" decoration-warning="invoice_status == 'upselling'" widget="badge" optional="show"/>
+                    <field name="tag_ids" optional="hide" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            
+              
+
+            </field>
+        </record>
+
+
+
+           <record id="salla_orders" model="ir.actions.act_window">
+            <field name="name">Salla Orders</field>
+            <field name="res_model">sale.order</field>
+            <!-- <field name="domain">[]</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('integration_with_salla.sale_order_treeview_custom')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('integration_with_salla.sale_order_form_view_custom')})]"/>
+            <field name="target">main</field>
+            <!-- <field name="context">{'search_default_Phases': 1,'default_parent_id':active_id}</field> -->
+             <field name="domain">[('order_t', '=', 'salla')]</field>
+            
+        </record>
+
+        <menuitem id="sall_orders_menue"
+            name="Salla Orders"
+            parent="sale.sale_order_menu"
+            action="salla_orders"
+            sequence="15"/>
+
+            <record id="payment_method_view_custom" model="ir.ui.view">
+             <field name="name">payment.method.tree.inherit</field>
+            <field name="model">salla.payment.method</field>
+           <field name="arch" type="xml">
+                    <tree>
+                        <field name="name"/>
+                        <field name="journal_id"/>
+                    
+                    </tree>
+                    
+
+            </field>
+           </record>
+
+           <record id="payment_method_form_custom" model="ir.ui.view">
+             <field name="name">payment.method.form.inherit</field>
+            <field name="model">salla.payment.method</field>
+           <field name="arch" type="xml">
+                    <form>
+                        <sheet>
+                          <group>
+                            <field name="name"/>
+                            <field name="journal_id"/>
+                          </group>
+                        </sheet>
+                    
+                    </form>
+                    
+
+            </field>
+           </record>
+
+           <record id="salla_payment_method" model="ir.actions.act_window">
+            <field name="name">Payment Method</field>
+            <field name="res_model">salla.payment.method</field>
+            <field name="view_mode">tree,form</field>
+            </record>
+
+            <menuitem id="sall_payment_menue"
+            name="Payment Methods"
+            parent="sale.menu_sale_config"
+            action="salla_payment_method"
+            sequence="50"/>
+
+    
+  </data>
+</odoo>
