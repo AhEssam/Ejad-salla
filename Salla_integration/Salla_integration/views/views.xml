@@ -1,0 +1,83 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="integration_with_salla.list">
+      <field name="name">integration_with_salla list</field>
+      <field name="model">integration.salla</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="company_id"/>
+          <field name="tax_id"/>
+          <field name="uom_id"/>
+
+        </tree>
+      </field>
+    </record>
+   <record model="ir.ui.view" id="integration_with_salla.form">
+      <field name="name">integration_with_salla list</field>
+      <field name="model">integration.salla</field>
+      <field name="arch" type="xml">
+      <form>
+         <header>
+          <!-- <button string="Get auth code" name="authorization_get" type="object" class="oe_highlight"/> -->
+          <!-- <button string="Get Access token" name="get_token" type="object" class="oe_highlight"/> -->
+
+          <!-- <button string="Get" name="get_order" type="object" class="oe_highlight"/> -->
+          <!-- <button string="Get Product" name="get_products" type="object" class="oe_highlight"/> -->
+          <!-- <button string="Get Customer" name="get_customer" type="object" class="oe_highlight"/> -->
+          <!-- <button string="Get Categories" name="get_categories" type="object" class="oe_highlight"/> -->
+       
+        </header>
+     
+        <group>
+           <group>
+              <!-- <field name="url"/> -->
+              <!-- <field name="authorize_url"/> -->
+              <!-- <field name="token_url"/> -->
+              <!-- <field name="callback_uri"/> -->
+              <!-- <field name="client_id"/> -->
+              <!-- <field name="client_secret"/> -->
+              <!-- <field name="authorization_code"/> -->
+               <field name="parent_category_salla"/>
+              <field name="uom_id"/>
+            </group>
+             <group>
+                <!-- <field name="refresh_token" force_save="1" readonly="1"/> -->
+                <!-- <field name="token" force_save="1" readonly="1"/> -->
+               
+                <field name="tax_id"/>
+                <field name="company_id"/>
+
+
+              </group>
+
+
+        </group>
+           <!-- <field name="result" />  -->
+        </form>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="integration_with_salla_action_window">
+      <field name="name">Integration Salla </field>
+      <field name="res_model">integration.salla</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="integration with salla" id="integration_with_salla_root" sequence="-3"/>
+
+    <menuitem name="Salla Integration" id="integration_with_salla_menu"  action="integration_with_salla_action_window" parent="integration_with_salla_root"/>
+      <record id="ir_cron_scheduler_salla_action" model="ir.cron">
+       <field name="name">Salla</field>
+       <field name="model_id" ref="model_integration_salla"/>
+       <field name="state">code</field>
+       <field name="code">model.get_order()</field>
+       <field name="user_id" ref="base.user_root"/>
+       <field name="interval_number">1</field>
+       <field name="interval_type">minutes</field>
+       <field name="numbercall">-1</field>
+   </record>
+  </data>
+</odoo>
