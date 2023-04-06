@@ -22,7 +22,7 @@ You will have to to subscribe to salla app to get a full dashboard between salla
     'version': '15.0',
     'category': 'Sales',
     'sequence': 14,
-    'price': 150,
+    'price': 400,
     'currency': "USD",
 
     # any module necessary for this one to work correctly
